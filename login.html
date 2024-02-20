@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Authentication System</title>
+    <style>
+        body {
+            
+            background-color:darkgrey; /* Nice background color */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+
+        #login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], input[type="password"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        #success-message {
+            color: green;
+            margin-bottom: 10px;
+        }
+
+        #secured-page {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+   
+<div id="login-container">
+    <h2>Login</h2>
+    <div id="error-message"></div>
+    <div id="success-message"></div>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="register()">Register</button>
+</div>
+
+<div id="secured-page">
+    <h2>Secured Page</h2>
+    <p>Welcome! You have successfully logged in.</p>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    let users = [];
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            document.getElementById('error-message').innerText = '';
+            document.getElementById('success-message').innerText = 'Login successful!';
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('secured-page').style.display = 'block';
+        } else {
+            document.getElementById('success-message').innerText = '';
+            document.getElementById('error-message').innerText = 'Invalid username or password.';
+        }
+    }
+
+    function register() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username && password) {
+            users.push({ username, password });
+            document.getElementById('success-message').innerText = 'Registration successful!';
+            document.getElementById('error-message').innerText = '';
+        } else {
+            document.getElementById('success-message').innerText = '';
+            document.getElementById('error-message').innerText = 'Please enter both username and password.';
+        }
+    }
+
+    function logout() {
+        document.getElementById('login-container').style.display = 'block';
+        document.getElementById('secured-page').style.display = 'none';
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+    }
+</script>
+
+</body>
+</html>
